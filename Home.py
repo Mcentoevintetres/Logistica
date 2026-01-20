@@ -8,6 +8,14 @@ section[data-testid="stSidebar"] { display: none; }
 </style>
 """, unsafe_allow_html=True)
 
+st.markdown("""
+<style>
+.card {
+    margin-bottom: 24px;
+}
+</style>
+""", unsafe_allow_html=True)
+
 # ====== CSS GLOBAL PARA FIXAR CORES E TAMANHO ======
 st.markdown("""
 <style>
