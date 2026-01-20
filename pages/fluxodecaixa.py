@@ -95,9 +95,9 @@ elif entradas == saidas:
 else:
     indicador = ("🔴 Risco — Saídas maiores que entradas", "#a83232")
 
-# ================================
+
 # EXIBIR CARDS
-# ================================
+
 col1, col2 = st.columns(2)
 with col1:
     card(f"💰 Entradas: R$ {entradas:,.2f}", "#14532d")
@@ -111,9 +111,8 @@ with col2:
 
 card(f"{indicador[0]}", indicador[1])
 
-# ================================
-# SELECTBOX DE ENTRADAS E SAÍDAS  (CORRIGIDO)
-# ================================
+# SELECTBOX DE ENTRADAS E SAÍDAS
+
 st.markdown("---")
 st.subheader("🔎 Detalhamento de Entradas e Saídas")
 
@@ -168,9 +167,9 @@ with col_s:
         valor_sai = linha[mes].values[0]
         card(f"Valor da saída {saida_sel}: R$ {valor_sai:,.2f}", "#660000")
 
-# ================================
+
 # GRÁFICOS
-# ================================
+
 df_barras = pd.DataFrame(
     {"Valor": [entradas, saidas]},
     index=["Entradas", "Saídas"],

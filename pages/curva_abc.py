@@ -1,18 +1,16 @@
 import streamlit as st
 import pandas as pd
 
-# ==========================
 # LEITURA DA PLANILHA
-# ==========================
+
 df = pd.read_excel("./assets/classificacao_abc/Porti.xlsx", sheet_name="Planilha_Vendas")
 df = df.loc[:, ~df.columns.str.contains('^Unnamed')]
 
 st.header("Dashboard de Agrupamento por Curva ABC")
 st.info("Essa apresentação tem como intuito demonstrar a performance de vendas de alguns itens durante um intervalo de tempo, agrupando eles pelo seu percentual de vendas sobre o valor total.")
 
-# ==========================
+
 # PRÉ-PROCESSAMENTO
-# ==========================
 
 df["Valor Uni"] = pd.to_numeric(df["Valor Uni"], errors="coerce")
 df["Quant Vendida"] = pd.to_numeric(df["Quant Vendida"], errors="coerce")
@@ -38,9 +36,8 @@ df["Classe"] = df["%Acumulado"].apply(classificar)
 
 ABC_final = df[["Descrição", "%Vi_str", "Classe"]]
 
-# ==========================
 # RESUMO POR CLASSE
-# ==========================
+
 resumo = df.groupby("Classe")["%Vi"].sum().reset_index()
 valor_por_classe = df.groupby("Classe")["Valor Total"].sum().reset_index()
 
@@ -48,14 +45,12 @@ valor_A = valor_por_classe.loc[valor_por_classe["Classe"] == "A", "Valor Total"]
 valor_B = valor_por_classe.loc[valor_por_classe["Classe"] == "B", "Valor Total"].sum()
 valor_C = valor_por_classe.loc[valor_por_classe["Classe"] == "C", "Valor Total"].sum()
 
-# ==========================
-# 🔥 INSIGHT DINÂMICO ABC
-# ==========================
+
+
 st.subheader("📌 Insight da Curva ABC")
 
-# ==========================
+
 # VISÃO GERAL DE FATURAMENTO
-# ==========================
 
 st.success(f"Valor total vendido: R${valor_total_geral:,.2f}")
 
@@ -69,12 +64,11 @@ with col1:
 with col2:
     st.bar_chart(resumo, x="Classe", y=["%Vi"], horizontal=True)
 
-# ==========================
-# 📌 TABELA FINAL — Insight agora está ACIMA daqui
-# ==========================
+
+# TABELA FINAL — Insight agora está ACIMA daqui
 df["Classe"] = df["Classe"].astype(str)
 
-# --- 🔧 Correção do selectbox ---
+# --- Correção do selectbox ---
 mapa_classes = {
     "Classe A": "A",
     "Classe B": "B",
@@ -106,9 +100,7 @@ st.success(
 
 st.dataframe(ABC_final)
 
-# ==========================
 # TABS DE GRUPOS A/B/C
-# ==========================
 
 tab1, tab2, tab3 = st.tabs(["Grupo A", "Grupo B", "Grupo C"])
 
