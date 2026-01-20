@@ -26,9 +26,9 @@ Ld = Movimentacao_df["Lead time"].unique()
 
 
 #titulo e header do Dashboard demonstrativo 
-st.title('Olá, esse será nosso primeiro Dashboard')
-st.write('texto simples.')
+st.title('Dashboard de Estoque de segurança')
 st.info('Todos os dados abaixo são somente demonstrativos', icon="ℹ️")
+st.info(f'a taxa de serviço utilizada para esse demonstrativo é de 95%', icon="ℹ️" )
 valor_selecionado = st.selectbox(
         "Selecione Um item dos SKUS",
      df["SKU"].unique()
@@ -70,7 +70,7 @@ with col2:
     st.success(f"Tempo médio de reposição: {LT} dias.")
 
     #calculo do estoque de segurança
-    EstoqueSegurança = 1.645 * ( VendaMediaDiaria * math.sqrt(LT) )
+    EstoqueSegurança = 1.65 * ( VendaMediaDiaria * math.sqrt(LT) )
     #Calculo do ponto de pedido
     PontoPedido = (VendaMediaDiaria * LT) + EstoqueSegurança
     math.floor(PontoPedido)
