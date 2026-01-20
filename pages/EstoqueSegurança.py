@@ -74,8 +74,8 @@ with col2:
     #Calculo do ponto de pedido
     PontoPedido = (VendaMediaDiaria * LT) + EstoqueSegurança
     math.floor(PontoPedido)
-    st.success(f"O Estoque de Segurança é: {round(EstoqueSegurança)}")
-    st.success(f"O ponto de pedido é: {round(PontoPedido)}")
+    st.success(f"O Estoque de Segurança é: {round(EstoqueSegurança)} unidades.")
+    st.success(f"O ponto de pedido é de: {round(PontoPedido)} unidades")
 
 #Array que retorna uma lista com um periodo anul especifico
 meses = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun"]

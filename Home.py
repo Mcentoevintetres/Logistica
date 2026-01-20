@@ -28,11 +28,11 @@ st.markdown("""
 .card {
     padding: 20px;
     border-radius: 14px;
-    background-color: #f8f8f8 !important;
+    background-color: #D2F0E2 !important;
     box-shadow: 0px 4px 12px rgba(0,0,0,0.20);
     transition: 0.2s;
     cursor: pointer;
-    border: 1px solid rgba(255,255,255,0.05);
+    border: 1px solid #2CB67D;
 }
 
 .card:hover {
@@ -61,8 +61,10 @@ a {
 """, unsafe_allow_html=True)
 
 # ====== TÍTULO ======
-st.title("📦 Portfólio de Algoritmos Logísticos")
+st.title("Portfólio de Algoritmos Logísticos", text_alignment="center" )
 
+st.info("Esses são alguns dos algoritmos que desenvolvi com intuito de demonstrar meu conhecimento com processos logísticos integrados a programação com manipulação e análise de dados")
+st.info("Todos os dados utilizados são genéricos")
 # ====== ANY CARD ======
 def card(title, desc, page):
     st.markdown(f"""

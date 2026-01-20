@@ -4,7 +4,7 @@ import pandas as pd
 # ==========================
 # LEITURA DA PLANILHA
 # ==========================
-df = pd.read_excel("./assets/Classificação_ABC/Porti.xlsx", sheet_name="Planilha_Vendas")
+df = pd.read_excel("./assets/classificacao_abc/Porti.xlsx", sheet_name="Planilha_Vendas")
 df = df.loc[:, ~df.columns.str.contains('^Unnamed')]
 
 st.header("Dashboard de Agrupamento por Curva ABC")
