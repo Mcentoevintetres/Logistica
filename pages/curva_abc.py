@@ -5,7 +5,7 @@ import pandas as pd
 # LEITURA DA PLANILHA
 # =========================
 
-df_base = pd.read_excel("../assets/classificacao_abc/Porti.xlsx", sheet_name="Planilha_Vendas")
+df_base = pd.read_excel("./assets/classificacao_abc/Porti.xlsx", sheet_name="Planilha_Vendas")
 df_base = df_base.loc[:, ~df_base.columns.str.contains('^Unnamed')]
 
 df_base["Valor Uni"] = pd.to_numeric(df_base["Valor Uni"], errors="coerce")
