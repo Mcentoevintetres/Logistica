@@ -2,15 +2,16 @@ import streamlit as st
 import pandas as pd
 import math
 
-#Carregamento da Planilha
-df = pd.read_excel("./assets/Calculo_ES/Porti.xlsx")
+# ============================
+# CARREGAMENTO DAS PLANILHAS
+# ============================
+
+df = pd.read_excel("../assets/Calculo_ES/Porti.xlsx")
 df = df.loc[:, ~df.columns.str.contains('^Unnamed')]
 
-#Escolhendo a Tabela especifica de quantidade e fornecimento do estoque
-Movimentacao_df = pd.read_excel("./assets/Calculo_ES/Porti.xlsx", sheet_name="Movimentação")
+Movimentacao_df = pd.read_excel("../assets/Calculo_ES/Porti.xlsx", sheet_name="Movimentação")
 
-#Escolhendo a tabela da movimentação de venda por item
-MovimentacaoMeses_df = pd.read_excel("./assets/Calculo_ES/Porti.xlsx", sheet_name="Movimentação_Meses")
+MovimentacaoMeses_df = pd.read_excel("../assets/Calculo_ES/Porti.xlsx", sheet_name="Movimentação_Meses")
 MovimentacaoMeses_df = MovimentacaoMeses_df.loc[:, ~MovimentacaoMeses_df.columns.str.contains('^Unnamed')]
 MovimentacaoMeses_df.columns = (
     MovimentacaoMeses_df.columns
@@ -18,108 +19,191 @@ MovimentacaoMeses_df.columns = (
     .str.replace("\n", "")
     .str.title()
 )
-#Transformando as colunas em strings sem espaços
 MovimentacaoMeses_df.columns = MovimentacaoMeses_df.columns.str.strip()
 
-#PEgando o lead time de cada fornecedor
-Ld = Movimentacao_df["Lead time"].unique()
+# ============================
+# DASHBOARD
+# ============================
 
-
-#titulo e header do Dashboard demonstrativo 
-st.title('Dashboard de Estoque de segurança')
+st.title('Dashboard de Estoque de Segurança')
 st.info('Todos os dados abaixo são somente demonstrativos', icon="ℹ️")
-st.info(f'a taxa de serviço utilizada para esse demonstrativo é de 95%', icon="ℹ️" )
+st.info('A taxa de serviço utilizada para esse demonstrativo é de 95%', icon="ℹ️")
+
 valor_selecionado = st.selectbox(
-        "Selecione Um item dos SKUS",
-     df["SKU"].unique()
-    )
-st.markdown("Dados da linha selecionada:")
- # Selectbox com valores únicos dos SKUS
+    "Selecione um item dos SKUs",
+    df["SKU"].unique()
+)
+
+st.markdown("## 📦 Dados do Produto Selecionado")
+
 col1, col2 = st.columns(2)
 
-#Divisão em duas colunas, onde na primeira temos a seleção e retorno do item desejado
+# ============================
+# COLUNA 1 - DADOS DO PRODUTO
+# ============================
+
 with col1:
-    #conferindo o valor selecionado está na planilha.
     linha_filtrada = df[df["SKU"] == valor_selecionado]
-    #buscando preço do item filtrado
+
     PrecoUni = linha_filtrada["Preço unit"].values[0]
-    #buscando o lead time do item filtrado
+    produtoSelecionado = linha_filtrada["Descrição"].values[0]
+    produtoCategoria = linha_filtrada["Categoria"].values[0]
+    VendaMensal = linha_filtrada["Venda Mensal"].values[0]
+    VendaMediaDiaria = VendaMensal / 30
+
     LeadTime_filtrada = Movimentacao_df[Movimentacao_df["SKU"] == valor_selecionado]
     LT = LeadTime_filtrada["Lead time"].values[0]
-    #selecionando o nome do item filtrado
-    produtoSelecionado = linha_filtrada["Descrição"].values[0]
-    #Selecionado a categoria do item filtrado
-    produtoCategoria = linha_filtrada["Categoria"].values[0]
-    #Selecionando o valor de vendal mensal do item
-    VendaMensal = linha_filtrada["Venda Mensal"].values[0]
-    #calculo da venda media diaria do item
-    VendaMediaDiaria = VendaMensal/30
-    #Exposição dos valores filtrados acima
+
     st.success(produtoSelecionado)
     st.success(produtoCategoria)
-    st.success(f"Valor Unitario do Item: R${PrecoUni}")
-    st.success(f"Média  Venda Diaria: {round(VendaMediaDiaria)} unidades.")
+    st.success(f"Valor Unitário do Item: R$ {PrecoUni}")
+    st.success(f"Média de Venda Diária: {round(VendaMediaDiaria)} unidades")
 
-#A segunda coluna nos fornece os valores relacionados ao estoque,preço e movimentação desse produto
+# ============================
+# COLUNA 2 - ESTOQUE E CÁLCULOS
+# ============================
+
 with col2:
+    st.success(f"Média de Venda Mensal: {VendaMensal} unidades")
+    st.success(f"Tempo médio de reposição (Lead Time): {LT} dias")
 
-    #preço do item filtrado
-    PrecoUni = linha_filtrada["Preço unit"].values[0]
-    #expondo os valores filtrados acima
-    st.success(f"Média Venda Mensal: {VendaMensal} unidades.")
-    st.success(f"Tempo médio de reposição: {LT} dias.")
+    # Estoque de Segurança
+    EstoqueSeguranca = 1.65 * (VendaMediaDiaria * math.sqrt(LT))
 
-    #calculo do estoque de segurança
-    EstoqueSegurança = 1.65 * ( VendaMediaDiaria * math.sqrt(LT) )
-    #Calculo do ponto de pedido
-    PontoPedido = (VendaMediaDiaria * LT) + EstoqueSegurança
-    math.floor(PontoPedido)
-    st.success(f"O Estoque de Segurança é: {round(EstoqueSegurança)} unidades.")
-    st.success(f"O ponto de pedido é de: {round(PontoPedido)} unidades")
+    # Ponto de Pedido
+    PontoPedido = (VendaMediaDiaria * LT) + EstoqueSeguranca
 
-#Array que retorna uma lista com um periodo anul especifico
+    st.success(f"Estoque de Segurança: {round(EstoqueSeguranca)} unidades")
+    st.success(f"Ponto de Pedido: {round(PontoPedido)} unidades")
+
+# ============================
+# ANÁLISE MENSAL
+# ============================
+
 meses = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun"]
-#Seleção e conferencia se o mês selecionado está na planilha
-Mes_selecionado = st.selectbox(
-        "Selecione Um item dos meses",
-        [col for col in MovimentacaoMeses_df.columns if col in meses]
-     
-    )
 
-#Busca o Estoque atual
+Mes_selecionado = st.selectbox(
+    "Selecione um mês",
+    [col for col in MovimentacaoMeses_df.columns if col in meses]
+)
+
 Estoque_filtrada = Movimentacao_df[Movimentacao_df["SKU"] == valor_selecionado]
 Estoque_Atual = Estoque_filtrada["Quant Atual"].values[0]
+
 Mes_filtrado = MovimentacaoMeses_df[MovimentacaoMeses_df["Sku"] == valor_selecionado]
 Valor_mes = Mes_filtrado[Mes_selecionado].values[0]
 valores_mensais = Mes_filtrado[meses].values[0].tolist()
-#Alertas de quebra e excesso de estoque
-if int(Estoque_Atual) < int(Valor_mes):
-    st.error(f"O estoque do está abaixo do esperado podendo gerar ruptura")
-if int(Estoque_Atual) > int(PontoPedido):
-    st.warning(f"O Estoque está acima do ponto de pedido de reposição")
-st.success(f"o valor de vendas de {Mes_selecionado} para o {produtoSelecionado} é: {Valor_mes} unidades.")
 
-#Criação da tabela com os dados de estoque para fins de comparação
-AnaliseMensal= pd.DataFrame({
+# ============================
+# ALERTAS OPERACIONAIS
+# ============================
+
+if int(Estoque_Atual) < int(Valor_mes):
+    st.error("⚠️ O estoque está abaixo do esperado, risco de ruptura!")
+
+if int(Estoque_Atual) > int(PontoPedido):
+    st.warning("⚠️ O estoque está acima do ponto de pedido (possível excesso).")
+
+st.success(f"Vendas de {Mes_selecionado}: {Valor_mes} unidades")
+
+# ============================
+# 💰 ANÁLISE ECONÔMICA DO ESTOQUE
+# ============================
+
+st.markdown("## 💰 Análise Econômica do Estoque")
+
+# parâmetros econômicos (editáveis futuramente)
+taxa_custo_estoque = 0.25  # 25% ao ano
+margem_lucro = 0.30        # 30%
+
+# Estoque médio estimado
+EstoqueMedio = Estoque_Atual / 2 if Estoque_Atual > 0 else 0
+
+# Custo de manter estoque
+CustoManterEstoque = EstoqueMedio * PrecoUni * taxa_custo_estoque
+
+# Demanda não atendida (ruptura)
+DemandaNaoAtendida = max(0, Valor_mes - Estoque_Atual)
+
+# Margem unitária
+MargemUnitaria = PrecoUni * margem_lucro
+
+# Custo de ruptura
+CustoRuptura = DemandaNaoAtendida * MargemUnitaria
+
+# Custo total
+CustoTotalEstoque = CustoManterEstoque + CustoRuptura
+
+st.success(f"Custo anual de manter estoque: R$ {CustoManterEstoque:,.2f}")
+st.success(f"Custo estimado de ruptura: R$ {CustoRuptura:,.2f}")
+st.success(f"Custo total do estoque: R$ {CustoTotalEstoque:,.2f}")
+
+# ============================
+# DECISÃO ECONÔMICA AUTOMÁTICA
+# ============================
+
+if CustoManterEstoque > CustoRuptura:
+    st.warning("📉 Estoque economicamente excessivo (custo de manter > custo de ruptura).")
+elif CustoRuptura > CustoManterEstoque:
+    st.error("📈 Estoque insuficiente (perda financeira por ruptura).")
+else:
+    st.success("✅ Nível de estoque próximo do ideal econômico.")
+
+# ============================
+# 📊 SIMULAÇÃO DE CENÁRIOS
+# ============================
+
+st.markdown("## 📊 Simulação de Cenários de Estoque")
+
+cenarios = {
+    "Baixo": EstoqueSeguranca,
+    "Ideal": PontoPedido,
+    "Atual": Estoque_Atual
+}
+
+resultados = []
+
+for nome, estoque in cenarios.items():
+    estoque_medio = estoque / 2
+    custo_manter = estoque_medio * PrecoUni * taxa_custo_estoque
+    ruptura = max(0, Valor_mes - estoque) * MargemUnitaria
+    custo_total = custo_manter + ruptura
+
+    resultados.append({
+        "Cenário": nome,
+        "Estoque (unid)": round(estoque),
+        "Custo Manter (R$)": round(custo_manter, 2),
+        "Custo Ruptura (R$)": round(ruptura, 2),
+        "Custo Total (R$)": round(custo_total, 2)
+    })
+
+df_cenarios = pd.DataFrame(resultados)
+st.dataframe(df_cenarios, use_container_width=True)
+
+# ============================
+# GRÁFICOS
+# ============================
+
+AnaliseMensal = pd.DataFrame({
     "Mês": meses,
     "Vendas": valores_mensais
 })
+
 AnaliseEstoqueDF = pd.DataFrame(
     {
         "Mês": [Mes_selecionado],
-        "Estoque Segurança": [round(EstoqueSegurança)],
+        "Estoque Segurança": [round(EstoqueSeguranca)],
         "Ponto de Pedido": [round(PontoPedido)],
         "Venda Mensal": [Valor_mes],
         "Estoque Atual": [Estoque_Atual]
     }
 )
-#Grafico em barra com os valores selecionados
+
 st.bar_chart(
     AnaliseEstoqueDF,
     x="Mês",
-    y=["Estoque Segurança","Ponto de Pedido","Venda Mensal", "Estoque Atual"],
-    color=["#FF0000", "#0000FF", "#00AA00", "#FFFF00"],
+    y=["Estoque Segurança", "Ponto de Pedido", "Venda Mensal", "Estoque Atual"],
     stack=False
 )
 
-st.line_chart(AnaliseMensal, x="Mês", y="Vendas", color="#FF0000")
+st.line_chart(AnaliseMensal, x="Mês", y="Vendas")
