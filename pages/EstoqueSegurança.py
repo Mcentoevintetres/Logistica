@@ -6,12 +6,12 @@ import math
 # CARREGAMENTO DAS PLANILHAS
 # ============================
 
-df = pd.read_excel("../assets/Calculo_ES/Porti.xlsx")
+df = pd.read_excel("./assets/Calculo_ES/Porti.xlsx")
 df = df.loc[:, ~df.columns.str.contains('^Unnamed')]
 
-Movimentacao_df = pd.read_excel("../assets/Calculo_ES/Porti.xlsx", sheet_name="Movimentação")
+Movimentacao_df = pd.read_excel("./assets/Calculo_ES/Porti.xlsx", sheet_name="Movimentação")
 
-MovimentacaoMeses_df = pd.read_excel("../assets/Calculo_ES/Porti.xlsx", sheet_name="Movimentação_Meses")
+MovimentacaoMeses_df = pd.read_excel("./assets/Calculo_ES/Porti.xlsx", sheet_name="Movimentação_Meses")
 MovimentacaoMeses_df = MovimentacaoMeses_df.loc[:, ~MovimentacaoMeses_df.columns.str.contains('^Unnamed')]
 MovimentacaoMeses_df.columns = (
     MovimentacaoMeses_df.columns
