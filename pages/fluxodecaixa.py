@@ -1,189 +1,213 @@
 import streamlit as st
 import pandas as pd
+import matplotlib.pyplot as plt
 
 st.set_page_config(page_title="Fluxo de Caixa", layout="wide")
 
-# ================================
-# Função de card colorido
-# ================================
-def card(texto, cor):
+
+# Funções auxiliares
+def card(titulo, valor, bg, borda):
     st.markdown(
         f"""
         <div style="
-            padding:12px;
-            border-radius:8px;
-            margin-bottom:10px;
-            background-color:{cor};
-            color:white;
-            font-size:18px;
-            font-weight:600;">
-            {texto}
+            padding:18px;
+            border-radius:12px;
+            margin-bottom:14px;
+            background:{bg};
+            border-left:6px solid {borda};
+            box-shadow:0 4px 10px rgba(0,0,0,0.08);
+        ">
+            <div style="font-size:14px; color:#334155;">{titulo}</div>
+            <div style="font-size:24px; font-weight:700; color:#0f172a;">
+                {valor}
+            </div>
         </div>
         """,
         unsafe_allow_html=True
     )
 
-# ================================
-# Código principal
-# ================================
+def autopct_filtrado(percent):
+    return f"{percent:.1f}%" if percent >= 2 else ""
+
+
+# Leitura dos dados
 st.title("📊 Analisador de Fluxo de Caixa")
 
-# Leitura direta da planilha (CORRIGIDO → texto 100% fiel ao Excel)
 df = pd.read_excel(
     "./assets/FluxodeCaixa/FluxoCaixa.xlsx",
     sheet_name="FluxoCaixa",
-    dtype=str    # ← garante texto exatamente como no arquivo
+    dtype=str
 )
 
-# Converter colunas numéricas após leitura segura
 for col in df.columns[1:]:
     df[col] = pd.to_numeric(df[col], errors="coerce")
 
-# Renomear colunas
 col_meses = [c for c in df.columns if "Mês" in str(c)]
 meses = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul"]
+df = df.rename(columns=dict(zip(col_meses, meses)))
 
-colmap = {old: new for old, new in zip(col_meses, meses)}
-df = df.rename(columns=colmap)
-
-# Identificar blocos
 linha_total_entradas = df[df.iloc[:, 0] == "TOTAL DE ENTRADAS"].index[0]
 linha_total_saidas = df[df.iloc[:, 0] == "TOTAL DE SAÍDAS"].index[0]
 
-# Blocos
 bloco_entradas = df.iloc[1:linha_total_entradas].copy()
 bloco_saidas = df.iloc[linha_total_entradas + 2:linha_total_saidas].copy()
 
-# Renomear primeira coluna
-bloco_entradas = bloco_entradas.rename(columns={bloco_entradas.columns[0]: "Categoria"})
-bloco_saidas = bloco_saidas.rename(columns={bloco_saidas.columns[0]: "Categoria"})
+bloco_entradas = bloco_entradas.rename(
+    columns={bloco_entradas.columns[0]: "Categoria"}
+)
+bloco_saidas = bloco_saidas.rename(
+    columns={bloco_saidas.columns[0]: "Categoria"}
+)
 
-# CORREÇÃO → apenas strip
 bloco_entradas["Categoria"] = bloco_entradas["Categoria"].astype(str).str.strip()
 bloco_saidas["Categoria"] = bloco_saidas["Categoria"].astype(str).str.strip()
 
-# Selectbox do mês
+# Seleção do mês
 mes = st.selectbox("Selecione um mês", meses)
+idx = meses.index(mes)
 
-# Cálculos principais
+# Cálculos
 entradas = bloco_entradas[mes].sum()
 saidas = bloco_saidas[mes].sum()
 saldo_mes = entradas - saidas
 
-idx = meses.index(mes)
+saldo_anterior = 0 if idx == 0 else (
+    bloco_entradas[meses[idx - 1]].sum()
+    - bloco_saidas[meses[idx - 1]].sum()
+)
 
-# Saldo anterior
-if idx == 0:
-    saldo_anterior = 0
-else:
-    m_ant = meses[idx - 1]
-    saldo_anterior = bloco_entradas[m_ant].sum() - bloco_saidas[m_ant].sum()
+saldo_acumulado = sum(
+    bloco_entradas[m].sum() - bloco_saidas[m].sum()
+    for m in meses[:idx + 1]
+)
 
-# Saldo acumulado
-saldo_acumulado = 0
-for m in meses[:idx + 1]:
-    saldo_acumulado += bloco_entradas[m].sum() - bloco_saidas[m].sum()
-
-# NCG
 ncg = max(saidas - entradas, 0)
 
-# Indicador
-if entradas > saidas:
-    indicador = ("🟢 Situação saudável", "#1B8E5A")
-elif entradas == saidas:
-    indicador = ("🟡 Equilíbrio financeiro", "#b59f00")
-else:
-    indicador = ("🔴 Risco — Saídas maiores que entradas", "#a83232")
-
-
-# EXIBIR CARDS
-
+# Cards
 col1, col2 = st.columns(2)
+
 with col1:
-    card(f"💰 Entradas: R$ {entradas:,.2f}", "#14532d")
-    card(f"💸 Saídas: R$ {saidas:,.2f}", "#f10c0c")
-    card(f"💹 Saldo: R$ {saldo_mes:,.2f}", "#1e3a8a")
+    card("💰 Entradas", f"R$ {entradas:,.2f}", "#ecfdf5", "#22c55e")
+    card("💸 Saídas", f"R$ {saidas:,.2f}", "#fef2f2", "#ef4444")
+    card("💹 Saldo do mês", f"R$ {saldo_mes:,.2f}", "#eff6ff", "#3b82f6")
 
 with col2:
-    card(f"📊 Saldo anterior: R$ {saldo_anterior:,.2f}", "#3b0764")
-    card(f"📈 Saldo acumulado: R$ {saldo_acumulado:,.2f}", "#25cf41")
-    card(f"🏦 Necessidade de capital de giro: R$ {ncg:,.2f}", "#f10c0c")
+    card("📊 Saldo anterior", f"R$ {saldo_anterior:,.2f}", "#f5f3ff", "#8b5cf6")
+    card("📈 Saldo acumulado", f"R$ {saldo_acumulado:,.2f}", "#ecfeff", "#06b6d4")
+    card("🏦 Necessidade de capital de giro", f"R$ {ncg:,.2f}", "#fff7ed", "#f97316")
 
-card(f"{indicador[0]}", indicador[1])
-
-# SELECTBOX DE ENTRADAS E SAÍDAS
-
+# Detalhamento por categoria
 st.markdown("---")
 st.subheader("🔎 Detalhamento de Entradas e Saídas")
 
 col_e, col_s = st.columns(2)
 
-# ====== ENTRADAS ======
 with col_e:
     st.markdown("### 🟦 Entradas")
-
-    # Cria coluna de texto totalmente normalizada para comparação
-    bloco_entradas["Categoria_norm"] = (
+    entrada_sel = st.selectbox(
+        "Selecione uma entrada",
         bloco_entradas["Categoria"]
-        .astype(str)
-        .str.strip()
-        .str.replace(r"\s+", " ", regex=True)
-        .str.normalize("NFKC")
+    )
+    valor_ent = bloco_entradas.loc[
+        bloco_entradas["Categoria"] == entrada_sel, mes
+    ].values[0]
+
+    card(
+        f"Entrada: {entrada_sel}",
+        f"R$ {valor_ent:,.2f}",
+        "#eff6ff",
+        "#2563eb"
     )
 
-    lista_entradas = bloco_entradas["Categoria_norm"].tolist()
-
-    entrada_sel = st.selectbox("Selecione uma entrada", lista_entradas)
-
-    linha = bloco_entradas.loc[bloco_entradas["Categoria_norm"] == entrada_sel]
-
-    if linha.empty:
-        card("⚠️ Erro: Categoria não encontrada. Texto inconsistente no Excel.", "#660000")
-    else:
-        valor_ent = linha[mes].values[0]
-        card(f"Valor da entrada {entrada_sel}: R$ {valor_ent:,.2f}", "#003366")
-
-# ====== SAÍDAS ======
 with col_s:
     st.markdown("### 🟥 Saídas")
-
-    bloco_saidas["Categoria_norm"] = (
+    saida_sel = st.selectbox(
+        "Selecione uma saída",
         bloco_saidas["Categoria"]
-        .astype(str)
-        .str.strip()
-        .str.replace(r"\s+", " ", regex=True)
-        .str.normalize("NFKC")
+    )
+    valor_sai = bloco_saidas.loc[
+        bloco_saidas["Categoria"] == saida_sel, mes
+    ].values[0]
+
+    card(
+        f"Saída: {saida_sel}",
+        f"R$ {valor_sai:,.2f}",
+        "#fef2f2",
+        "#dc2626"
     )
 
-    lista_saidas = bloco_saidas["Categoria_norm"].tolist()
-
-    saida_sel = st.selectbox("Selecione uma saída", lista_saidas)
-
-    linha = bloco_saidas.loc[bloco_saidas["Categoria_norm"] == saida_sel]
-
-    if linha.empty:
-        card("⚠️ Erro: Categoria não encontrada. Texto inconsistente no Excel.", "#660000")
-    else:
-        valor_sai = linha[mes].values[0]
-        card(f"Valor da saída {saida_sel}: R$ {valor_sai:,.2f}", "#660000")
-
-
-# GRÁFICOS
-
-df_barras = pd.DataFrame(
-    {"Valor": [entradas, saidas]},
-    index=["Entradas", "Saídas"],
+# Gráficos
+tab1, tab2, tab3 = st.tabs(
+    ["📊 Entradas vs Saídas", "📈 Evolução do saldo", "🥧 Distribuição (%)"]
 )
 
-df_saldo = pd.DataFrame({
-    "Saldo": [
-        bloco_entradas[m].sum() - bloco_saidas[m].sum()
-        for m in meses
-    ]
-}, index=meses)
-
-tab1, tab2 = st.tabs(["📊 Entradas vs Saídas", "📈 Evolução do saldo"])
 with tab1:
-    st.bar_chart(df_barras)
+    st.bar_chart(pd.DataFrame(
+        {"Valor": [entradas, saidas]},
+        index=["Entradas", "Saídas"]
+    ))
+
 with tab2:
-    st.line_chart(df_saldo)
+    st.line_chart(pd.DataFrame({
+        "Saldo": [
+            bloco_entradas[m].sum() - bloco_saidas[m].sum()
+            for m in meses
+        ]
+    }, index=meses))
+
+with tab3:
+    col_p1, col_p2 = st.columns(2)
+
+    with col_p1:
+        st.markdown("### 🟦 Entradas (%)")
+
+        df_pizza_ent = (
+            bloco_entradas[["Categoria", mes]]
+            .dropna()
+            .query(f"`{mes}` > 0")
+            .sort_values(by=mes, ascending=False)
+        )
+
+        fig1, ax1 = plt.subplots(figsize=(6, 6))
+        ax1.pie(
+            df_pizza_ent[mes],
+            autopct=autopct_filtrado,
+            startangle=90,
+            pctdistance=0.75
+        )
+        ax1.axis("equal")
+        st.pyplot(fig1)
+
+        st.dataframe(
+            df_pizza_ent.assign(
+                Percentual=lambda x: (x[mes] / x[mes].sum() * 100).round(2)
+            ),
+            use_container_width=True
+        )
+
+    with col_p2:
+        st.markdown("### 🟥 Saídas (%)")
+
+        df_pizza_sai = (
+            bloco_saidas[["Categoria", mes]]
+            .dropna()
+            .query(f"`{mes}` > 0")
+            .sort_values(by=mes, ascending=False)
+        )
+
+        fig2, ax2 = plt.subplots(figsize=(6, 6))
+        ax2.pie(
+            df_pizza_sai[mes],
+            autopct=autopct_filtrado,
+            startangle=90,
+            pctdistance=0.75
+        )
+        ax2.axis("equal")
+        st.pyplot(fig2)
+
+        st.dataframe(
+            df_pizza_sai.assign(
+                Percentual=lambda x: (x[mes] / x[mes].sum() * 100).round(2)
+            ),
+            use_container_width=True
+        )
