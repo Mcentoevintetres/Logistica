@@ -1,8 +1,30 @@
-#apresentação
+# Simulador de sistema logistico e admnistrativo
 
-## Descrição
+## Descrição do sistema
 
+O sistema busca simular algumas ferramentas de analise de movimentação de estoque em um comercio, visando agrupar itens pelo método de classificação ABC e XYZ, analise unitaria de estoque de item e por ultimo uma simulador básico de fluxo de caixa.
 
+### O sistema é dividido em três funcionalidades diferentes:
+
+#####📦 Algoritmo de classificação ABC e XYZ
+O sistema lê e manipula os dados de uma planilha excel anexada, classificando os itens pelos fatores:
+<ul>
+  <li>Fator financeiro para a classificação ABC</li>
+  <li>Fator de criticidade operacional para a classificação XYZ</li>
+</ul>
+
+#####📦 Algoritmo de analise de estoque
+ O sistema lê e manipula os dados de uma planilha excel anexada, trazendo os dados relacionados ao estoque daquele item escolhido, analisando pontos como:
+ <ul>
+   <li>Estoque de segurança</li>
+   <li>Ponto de pedido</li>
+   <li>Ruptura de Estoque</li>
+   <li>Custo de Estoque</li>
+ </ul>
+
+ #####📉 Algoritmo Fluxo de caixa
+ O sistema lê e manipula os dados de uma planilha excel anexada trazendo todos os dados relacionados a entrada e saída do caixa em um determinado período
+ 
 ## instruções de instalação
 
 
