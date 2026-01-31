@@ -6,14 +6,14 @@ O sistema busca simular algumas ferramentas de analise de movimentação de esto
 
 ### O sistema é dividido em três funcionalidades diferentes:
 
-####📦 Algoritmo de classificação ABC e XYZ
+#### 📦 Algoritmo de classificação ABC e XYZ
 O sistema lê e manipula os dados de uma planilha excel anexada, classificando os itens pelos fatores:
 <ul>
   <li>Fator financeiro para a classificação ABC</li>
   <li>Fator de criticidade operacional para a classificação XYZ</li>
 </ul>
 
-<h5>📦 Algoritmo de analise de estoque</5>
+#### 📦 Algoritmo de analise de estoque</5>
  O sistema lê e manipula os dados de uma planilha excel anexada, trazendo os dados relacionados ao estoque daquele item escolhido, analisando pontos como:
  <ul>
    <li>Estoque de segurança</li>
@@ -22,7 +22,7 @@ O sistema lê e manipula os dados de uma planilha excel anexada, classificando o
    <li>Custo de Estoque</li>
  </ul>
 
- ####📉 Algoritmo Fluxo de caixa
+ #### 📉 Algoritmo Fluxo de caixa
  O sistema lê e manipula os dados de uma planilha excel anexada trazendo todos os dados relacionados a entrada e saída do caixa em um determinado período
  
 ## instruções de instalação
