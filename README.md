@@ -2,7 +2,7 @@
 
 ## Descrição do sistema
 
-O sistema busca simular algumas ferramentas de analise de movimentação de estoque em um comercio, visando agrupar itens pelo método de classificação ABC e XYZ, analise unitaria de estoque de item e por ultimo uma simulador básico de fluxo de caixa.
+O sistema busca simular algumas ferramentas de análise de movimentação de estoque em um comércio, visando agrupar itens pelo método de classificação ABC e XYZ, análise unitária de estoque de item e por último um simulador básico de fluxo de caixa.
 
 ### O sistema é dividido em três funcionalidades diferentes:
 
@@ -13,8 +13,8 @@ O sistema lê e manipula os dados de uma planilha excel anexada, classificando o
   <li>Fator de criticidade operacional para a classificação XYZ</li>
 </ul>
 
-#### 📦 Algoritmo de analise de estoque</5>
- O sistema lê e manipula os dados de uma planilha excel anexada, trazendo os dados relacionados ao estoque daquele item escolhido, analisando pontos como:
+#### 📦 Algoritmo de análise de estoque
+ O sistema lê e manipula os dados de uma planilha excel anexada, buscando os dados relacionados ao estoque daquele item escolhido, análisando pontos como:
  <ul>
    <li>Estoque de segurança</li>
    <li>Ponto de pedido</li>
@@ -22,8 +22,8 @@ O sistema lê e manipula os dados de uma planilha excel anexada, classificando o
    <li>Custo de Estoque</li>
  </ul>
 
- #### 📉 Algoritmo Fluxo de caixa
- O sistema lê e manipula os dados de uma planilha excel anexada trazendo todos os dados relacionados a entrada e saída do caixa em um determinado período
+ #### 📉 Algoritmo de Fluxo de caixa
+ O sistema lê e manipula os dados de uma planilha excel anexada trazendo todos os dados relacionados a entrada e saída do caixa de um determinado período.
  
 ## instruções de instalação
 
