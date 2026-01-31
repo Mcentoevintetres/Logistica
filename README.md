@@ -13,7 +13,7 @@ O sistema lê e manipula os dados de uma planilha excel anexada, classificando o
   <li>Fator de criticidade operacional para a classificação XYZ</li>
 </ul>
 
-####📦 Algoritmo de analise de estoque
+<h5>📦 Algoritmo de analise de estoque</5>
  O sistema lê e manipula os dados de uma planilha excel anexada, trazendo os dados relacionados ao estoque daquele item escolhido, analisando pontos como:
  <ul>
    <li>Estoque de segurança</li>
