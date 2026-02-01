@@ -5,6 +5,8 @@
 Este repositório reúne um conjunto de algoritmos logísticos e de análise de dados, desenvolvidos em Python e Streamlit.
 Os algoritmos buscam simular algumas ferramentas de análise de movimentação de estoque em um comércio, visando agrupar itens pelo método de classificação ABC e XYZ, análise unitária de estoque de item e por último um simulador básico de fluxo de caixa.
 
+O objetivo do projeto é demonstrar, de forma prática e técnica, como dados podem ser transformados em informação estratégica para tomada de decisão.
+
 ### O sistema é dividido em três funcionalidades diferentes:
 
 #### 📦 Algoritmo de classificação ABC e XYZ
