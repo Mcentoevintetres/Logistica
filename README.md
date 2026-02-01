@@ -83,8 +83,18 @@ O algoritmo lê e manipula os dados de uma planilha excel anexada, classificando
       style="padding-right: 10px;"
       src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg"
   />
+
  
-## instruções de instalação
+## 🧪 instruções de instalação
+
+**Clone o repositório:**
+`git clone https://github.com/Mcentoevintetres/logistica.git`
+
+**instale as dependências:**
+`pip install -r requirements.txt`
+
+**Execetue o streamlit:**
+`streamlit run Home.py`
 
 
 ## instruções de uso
