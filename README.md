@@ -103,7 +103,7 @@ O algoritmo lê e manipula os dados de uma planilha excel anexada, classificando
 `streamlit run Home.py`
 
 
-## Fundamentos de Python para Análise e Aplicações
+## 🧪 Fundamentos de Python para Análise e Aplicações
 
 **Manipulação de Dados com Pandas**
 
