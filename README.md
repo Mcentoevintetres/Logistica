@@ -27,6 +27,62 @@ O algoritmo lê e manipula os dados de uma planilha excel anexada, classificando
 
  #### 📉 Algoritmo de Fluxo de caixa
  O algoritmo lê e manipula os dados de uma planilha excel anexada trazendo todos os dados relacionados a entrada e saída do caixa de um determinado período.
+
+ ### 👨‍💻 Tecnologias utilizadas
+ 
+  <img
+      align="left"
+      alt="Python"
+      title="Python"
+      width="30px"
+      style="padding-right: 10px;"
+      src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/aarch64/aarch64-original.svg"
+  />
+  
+  <img
+      align="left"
+      alt="Pandas"
+      title="Pandas"
+      width="30px"
+      style="padding-right: 10px;"
+      src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/aarch64/aarch64-original.svg"
+  />
+  
+  <img
+      align="left"
+      alt="Streamlit"
+      title="Streamlit"
+      width="30px"
+      style="padding-right: 10px;"
+      src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/aarch64/aarch64-original.svg"
+  />
+  
+  <img
+      align="left"
+      alt="Matplotlib"
+      title="Matplotlib"
+      width="30px"
+      style="padding-right: 10px;"
+      src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/aarch64/aarch64-original.svg"
+  />
+  
+  <img
+      align="left"
+      alt="Plotly"
+      title="Plotly"
+      width="30px"
+      style="padding-right: 10px;"
+      src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/aarch64/aarch64-original.svg"
+  />
+  
+  <img
+      align="left"
+      alt="CSS"
+      title="CSS"
+      width="30px"
+      style="padding-right: 10px;"
+      src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/aarch64/aarch64-original.svg"
+  />
  
 ## instruções de instalação
 
