@@ -36,7 +36,7 @@ O algoritmo lê e manipula os dados de uma planilha excel anexada, classificando
       title="Python"
       width="30px"
       style="padding-right: 10px;"
-      src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/aarch64/aarch64-original.svg"
+      src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg"
   />
   
   <img
@@ -45,7 +45,7 @@ O algoritmo lê e manipula os dados de uma planilha excel anexada, classificando
       title="Pandas"
       width="30px"
       style="padding-right: 10px;"
-      src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/aarch64/aarch64-original.svg"
+      src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/pandas/pandas-original.svg"
   />
   
   <img
@@ -54,7 +54,7 @@ O algoritmo lê e manipula os dados de uma planilha excel anexada, classificando
       title="Streamlit"
       width="30px"
       style="padding-right: 10px;"
-      src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/aarch64/aarch64-original.svg"
+      src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/streamlit/streamlit-original.svg"
   />
   
   <img
@@ -63,7 +63,7 @@ O algoritmo lê e manipula os dados de uma planilha excel anexada, classificando
       title="Matplotlib"
       width="30px"
       style="padding-right: 10px;"
-      src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/aarch64/aarch64-original.svg"
+      src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/matplotlib/matplotlib-original.svg"
   />
   
   <img
@@ -72,7 +72,7 @@ O algoritmo lê e manipula os dados de uma planilha excel anexada, classificando
       title="Plotly"
       width="30px"
       style="padding-right: 10px;"
-      src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/aarch64/aarch64-original.svg"
+      src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/plotly/plotly-original.svg"
   />
   
   <img
@@ -81,7 +81,7 @@ O algoritmo lê e manipula os dados de uma planilha excel anexada, classificando
       title="CSS"
       width="30px"
       style="padding-right: 10px;"
-      src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/aarch64/aarch64-original.svg"
+      src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg"
   />
  
 ## instruções de instalação
