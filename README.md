@@ -2,19 +2,20 @@
 
 ## Descrição do sistema
 
-O sistema busca simular algumas ferramentas de análise de movimentação de estoque em um comércio, visando agrupar itens pelo método de classificação ABC e XYZ, análise unitária de estoque de item e por último um simulador básico de fluxo de caixa.
+Este repositório reúne um conjunto de algoritmos logísticos e de análise de dados, desenvolvidos em Python e Streamlit.
+Os algoritmos buscam simular algumas ferramentas de análise de movimentação de estoque em um comércio, visando agrupar itens pelo método de classificação ABC e XYZ, análise unitária de estoque de item e por último um simulador básico de fluxo de caixa.
 
 ### O sistema é dividido em três funcionalidades diferentes:
 
 #### 📦 Algoritmo de classificação ABC e XYZ
-O sistema lê e manipula os dados de uma planilha excel anexada, classificando os itens pelos fatores:
+O algoritmo lê e manipula os dados de uma planilha excel anexada, classificando os itens pelos fatores:
 <ul>
   <li>Fator financeiro para a classificação ABC</li>
   <li>Fator de criticidade operacional para a classificação XYZ</li>
 </ul>
 
 #### 📦 Algoritmo de análise de estoque
- O sistema lê e manipula os dados de uma planilha excel anexada, buscando os dados relacionados ao estoque daquele item escolhido, análisando pontos como:
+ O algoritmo lê e manipula os dados de uma planilha excel anexada, buscando os dados relacionados ao estoque daquele item escolhido, análisando pontos como:
  <ul>
    <li>Estoque de segurança</li>
    <li>Ponto de pedido</li>
@@ -23,7 +24,7 @@ O sistema lê e manipula os dados de uma planilha excel anexada, classificando o
  </ul>
 
  #### 📉 Algoritmo de Fluxo de caixa
- O sistema lê e manipula os dados de uma planilha excel anexada trazendo todos os dados relacionados a entrada e saída do caixa de um determinado período.
+ O algoritmo lê e manipula os dados de uma planilha excel anexada trazendo todos os dados relacionados a entrada e saída do caixa de um determinado período.
  
 ## instruções de instalação
 
