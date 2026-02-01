@@ -85,6 +85,8 @@ O algoritmo lê e manipula os dados de uma planilha excel anexada, classificando
       src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg"
   />
 
+<br/>
+<br/>
 
 ## 🔧 instruções de instalação
 
