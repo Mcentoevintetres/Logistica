@@ -28,6 +28,7 @@ O algoritmo lê e manipula os dados de uma planilha excel anexada, classificando
  #### 📉 Algoritmo de Fluxo de caixa
  O algoritmo lê e manipula os dados de uma planilha excel anexada trazendo todos os dados relacionados a entrada e saída do caixa de um determinado período.
 
+ 
  ### 👨‍💻 Tecnologias utilizadas
  
   <img
