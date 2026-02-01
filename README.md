@@ -103,4 +103,28 @@ O algoritmo lê e manipula os dados de uma planilha excel anexada, classificando
 `streamlit run Home.py`
 
 
-## instruções de uso
+## Fundamentos de Python para Análise e Aplicações
+
+**Manipulação de Dados com Pandas**
+
+ <ul>
+   <li>read_excel() e read_csv() para leitura de planilha</li>
+   <li>Tratamento de colunas Unnamed geradas pelo streamlit</li>
+   <li>Filtragem por linhas e colunas utilizando selectbox</li>
+   <li>Uso de .unique(), .loc[], .iloc[] para captura de valores unicos</li>
+   <li>Conversão de tipos (astype, int(), float())</li>
+ </ul>
+
+**Estruturas Condicionais e Validações**
+
+<ul>
+   <li>Uso de if, elif, else</li>
+   <li>Validação de entradas antes de cálculos</li>
+   <li>Prevenção de erros de execução (ValueError, TypeError)</li>
+ </ul>
+
+ **Problemas resolvidos:**
+ <ul>
+   <li>Erro de leitura de caracteres especiais (acentuação)</li>
+   <li>Conversão indevida de numpy.int64 para int</li>
+ </ul>
