@@ -2,26 +2,19 @@ import streamlit as st
 
 st.set_page_config(page_title="Portfólio Logístico", layout="wide")
 
+# OCULTA SIDEBAR
 st.markdown("""
 <style>
 section[data-testid="stSidebar"] { display: none; }
 </style>
 """, unsafe_allow_html=True)
 
-st.markdown("""
-<style>
-.card {
-    margin-bottom: 24px;
-}
-</style>
-""", unsafe_allow_html=True)
-
-# ====== CSS GLOBAL PARA FIXAR CORES E TAMANHO ======
+# CSS GLOBAL
 st.markdown("""
 <style>
 
 .card-container {
-    max-width: 350px;      /* Limita a largura */
+    max-width: 350px;
     width: 100%;
 }
 
@@ -44,13 +37,13 @@ st.markdown("""
 .card-title {
     font-size: 20px;
     font-weight: 700;
-    color: #222 !important;     /* FORÇA PRETO */
+    color: #222 !important;
     margin-bottom: 6px;
 }
 
 .card-desc {
     font-size: 14px;
-    color: #444 !important;     /* FORÇA CINZA ESCURO */
+    color: #444 !important;
 }
 
 a {
@@ -60,12 +53,17 @@ a {
 </style>
 """, unsafe_allow_html=True)
 
-# ====== TÍTULO ======
-st.title("Portfólio de Algoritmos Logísticos", text_alignment="center" )
+# TÍTULO
+st.title("Portfólio de Algoritmos Logísticos", text_alignment="center")
 
-st.info("Esses são alguns dos algoritmos que desenvolvi com intuito de demonstrar meu conhecimento com processos logísticos integrados a programação com manipulação e análise de dados")
+st.info(
+    "Esses são alguns dos algoritmos que desenvolvi com intuito de demonstrar meu conhecimento "
+    "com processos logísticos integrados a programação com manipulação e análise de dados"
+)
+
 st.info("Todos os dados utilizados são genéricos")
-# ====== ANY CARD ======
+
+# COMPONENTE CARD
 def card(title, desc, page):
     st.markdown(f"""
     <a href="/{page}" target="_self">
@@ -79,20 +77,33 @@ def card(title, desc, page):
     """, unsafe_allow_html=True)
 
 
-# ====== LAYOUT ======
-col1, col2, col3 = st.columns([1,1,1])
+# LAYOUT
+col1, col2, col3, col4 = st.columns(4)
 
 with col1:
-    card("📊 Curva ABC",
-         "Classifique itens pelo valor acumulado.",
-         "curva_abc")
+    card(
+        "📊 Curva ABC",
+        "Classifique itens pelo valor acumulado.",
+        "curva_abc"
+    )
 
 with col2:
-    card("💸 Fluxo de Caixa",
-         "Controle entradas e saídas financeiras.",
-         "fluxodecaixa")
+    card(
+        "💸 Fluxo de Caixa",
+        "Controle entradas e saídas financeiras.",
+        "fluxodecaixa"
+    )
 
 with col3:
-    card("📦 Estoque Segurança",
-         "Cálculo de ES, PP e risco de ruptura.",
-         "EstoqueSegurança")
+    card(
+        "📦 Estoque Segurança",
+        "Cálculo de ES, PP e risco de ruptura.",
+        "EstoqueSegurança"
+    )
+
+with col4:
+    card(
+        "🛒 Demanda Horária",
+        "Fluxo por hora • Picos • Escala por turno ",
+        "demanda"
+    )
