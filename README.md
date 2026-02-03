@@ -25,6 +25,17 @@ O algoritmo lê e manipula os dados de uma planilha excel anexada, classificando
    <li>Custo de Estoque</li>
  </ul>
 
+ #### 📦 Algoritmo de análise de demanda horária
+ O algoritmo analisa dados de entrada e saida de itens por determinado horário, visando determinar horários de picos e ociosos para melhor dimensionamento de equipe e priorização de pontos chaves de reposição.
+
+ Através dessa analise podemos auxiliar decisões como:
+  <ul>
+   <li>Definir horários de pico</li>
+   <li>Planejamento de inventário/limpeza/manutenção</li>
+   <li>Priorização de reposição de produtos</li>
+   <li>Organização de atendimento e caixa</li>
+ </ul>
+
  #### 📉 Algoritmo de Fluxo de caixa
  O algoritmo lê e manipula os dados de uma planilha excel anexada trazendo todos os dados relacionados a entrada e saída do caixa de um determinado período.
 
